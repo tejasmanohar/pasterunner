@@ -4,6 +4,7 @@
 
 # Gems
 require 'json'
+require 'rest_client'
 require 'sinatra'
 
 configure :development do
@@ -22,6 +23,10 @@ end
 
 # API
 post '/run' do
+  id = params[:url].split('/')[-1]
+  response = JSON.parse(RestClient.get 'https://api.github.com/gists/' + id)
+  code = response['files'].values.map { |h| h['content'] }
+
   content_type :json
-  { message: 'Hello World!' }.to_json
+  { message: code }.to_json
 end
