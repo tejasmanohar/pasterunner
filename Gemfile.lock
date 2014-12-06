@@ -32,6 +32,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  pry
-  sinatra
-  sinatra-contrib
+  pry (= 0.10.1)
+  sinatra (= 1.4.5)
+  sinatra-contrib (= 1.4.2)

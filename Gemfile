@@ -5,9 +5,9 @@
 ruby '2.1.5'
 source 'https://rubygems.org'
 
-gem 'sinatra'
+gem 'sinatra', '1.4.5'
 
 group :development do
-  gem 'sinatra-contrib'
-  gem 'pry'
+  gem 'sinatra-contrib', '1.4.2'
+  gem 'pry', '0.10.1'
 end
