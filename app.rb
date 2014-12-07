@@ -3,13 +3,19 @@
 # Open source on GitHub: http://github.com/tejas-manohar/pasterunner
 
 # Gems
+require 'ideone'
+require 'http'
 require 'json'
-require 'rest_client'
 require 'sinatra'
 
 configure :development do
   require 'pry'
   require 'sinatra/reloader'
+end
+
+configure do
+  enable :protection
+  ideone = Ideone.new(ENV['IDEONE_USERNAME'], ENV['IDEONE_PASSWORD'])
 end
 
 # Views
@@ -24,9 +30,10 @@ end
 # API
 post '/run' do
   id = params[:url].split('/')[-1]
-  response = JSON.parse(RestClient.get 'https://api.github.com/gists/' + id)
+  response = JSON.parse(HTTP.get('https://api.github.com/gists/' + id))
   code = response['files'].values.map { |h| h['content'] }
-
+  submission = ideone.create_submission(code, 17)
+  output = ideone.submission_status
   content_type :json
-  { message: code }.to_json
+  { stdout: output }.to_json
 end
