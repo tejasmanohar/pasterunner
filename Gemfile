@@ -1,6 +1,6 @@
 # PasteRunner built by Tejas Manohar
 # Released under the MIT License (mit-license.org)
-# Open source on GitHub: http://github.com/tejas-manohar/pasterunner
+# Open source on GitHub: http://github.com/tejasmanohar/pasterunner
 
 ruby '2.1.5'
 source 'https://rubygems.org'
