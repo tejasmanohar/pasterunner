@@ -6,7 +6,7 @@ ruby '2.1.5'
 source 'https://rubygems.org'
 
 gem 'ideone-ruby-api',    '2.1.2'
-gem 'http',               '0.6.3'
+gem 'http',               '0.6.3w'
 gem 'sinatra',            '1.4.5'
 
 group :development do
