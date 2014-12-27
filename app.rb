@@ -2,12 +2,14 @@
 # Released under the MIT License (mit-license.org)
 # Open source on GitHub: http://github.com/tejasmanohar/pasterunner
 
+
 # Gems
-require 'ideone'
 require 'http'
 require 'json'
 require 'sinatra'
 
+
+# Configuration
 configure :development do
   require 'pry'
   require 'sinatra/reloader'
@@ -18,6 +20,7 @@ configure do
   ideone = Ideone.new(ENV['IDEONE_USERNAME'], ENV['IDEONE_PASSWORD'])
 end
 
+
 # Views
 get '/' do
   erb :home
@@ -26,6 +29,7 @@ end
 not_found do
   erb :not_found
 end
+
 
 # API
 post '/run' do
