@@ -49,11 +49,12 @@ helpers do
 
   def get_gist_code(id)
     uri = URI('https://api.github.com/gists/' + id)
-    result = Net::HTTP.get_response(uri)
+    res = Net::HTTP.get_response(uri)
     if res.is_a?(Net::HTTPSuccess)
-      result.body
+      data = JSON.parse(res.body)
+      code = data['files'].values.map { |h| h['content'] }
     else
-      raise CommunicationError, result
+      raise CommunicationError, res
     end
   end
 
@@ -73,9 +74,6 @@ end
 # API
 post '/exec' do
   id = params[:url].split('/')[-1]
-  res = get_gist_code(id)
-  data = JSON.parse(res.body)
-  code = data['files'].values.map { |h| h['content'] }
-  p code[0]
-  p eval_in code[0]
+  code = get_gist_code(id)
+  eval_in code
 end
