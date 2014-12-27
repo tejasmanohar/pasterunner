@@ -6,6 +6,7 @@
 # Gems
 require 'nokogiri'
 require 'net/http'
+require 'faraday'
 require 'json'
 require 'sinatra'
 
@@ -36,13 +37,7 @@ helpers do
       body = Nokogiri(Net::HTTP.get(location))
 
       if output_title = body.at_xpath("*//h2[text()='Program Output']")
-        output = output_title.next_element.text
-        first_line = (output.each_line.first || "").chomp
-        needs_ellipsis = output.each_line.count > 1 ||
-          first_line.length > MaxLength
-
-        "#{first_line[0, MaxLength]}#{'...' if needs_ellipsis} "\
-        "(#{location})"
+        output_title.next_element.text
       else
         raise FormatError, 'could not find program output'
       end
