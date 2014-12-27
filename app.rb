@@ -29,5 +29,5 @@ post '/exec' do
   response = JSON.parse(HTTP.get('https://api.github.com/gists/' + id))
   code = response['files'].values.map { |h| h['content'] }
   content_type :json
-  { stdout: output }.to_json
+  { stdout: code }.to_json
 end
