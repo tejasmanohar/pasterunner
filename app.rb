@@ -26,8 +26,10 @@ end
 # API
 post '/exec' do
   id = params[:url].split('/')[-1]
-  response = JSON.parse(HTTP.get('https://api.github.com/gists/' + id))
-  code = response['files'].values.map { |h| h['content'] }
+  p id
+  res = JSON.parse(Faraday.get('https://api.github.com/gists/' + id))
+  code = res.body['files'].values.map { |h| h['content'] }
+
   content_type :json
-  { stdout: code }.to_json
+  { code: code }.to_json
 end
