@@ -27,8 +27,9 @@ end
 post '/exec' do
   id = params[:url].split('/')[-1]
   p id
-  res = JSON.parse(Faraday.get('https://api.github.com/gists/' + id))
-  code = res.body['files'].values.map { |h| h['content'] }
+  res = Faraday.get('https://api.github.com/gists/' + id)
+  data = JSON.parse(res.body)
+  code = data['files'].values.map { |h| h['content'] }
 
   content_type :json
   { code: code }.to_json
