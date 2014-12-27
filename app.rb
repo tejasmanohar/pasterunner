@@ -8,8 +8,19 @@ require 'faraday'
 require 'json'
 require 'sinatra'
 
+
+# Sinatra Settings
 configure do
   enable :protection
+end
+
+
+# Helpers
+helpers do
+  def eval_in(snippet)
+    res = Faraday.post('https://eval.in/', { :utf8 => 'λ', :code => snippet, :lang => 'ruby/mri-2.1' })
+    return res.body
+  end
 end
 
 
@@ -26,11 +37,9 @@ end
 # API
 post '/exec' do
   id = params[:url].split('/')[-1]
-  p id
   res = Faraday.get('https://api.github.com/gists/' + id)
   data = JSON.parse(res.body)
   code = data['files'].values.map { |h| h['content'] }
 
-  content_type :json
-  { code: code }.to_json
+  p eval_in(code)
 end
