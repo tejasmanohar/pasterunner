@@ -13,13 +13,13 @@ require 'sinatra'
 # Sinatra Settings
 configure do
   enable :protection
+  ServiceURI = URI('https://eval.in/')
 end
 
 
 # Helpers
 helpers do
   def eval_in(snippet)
-    ServiceURI = URI('https://eval.in/')
     result = Net::HTTP.post_form(
       ServiceURI,
      "utf8" => "λ",
