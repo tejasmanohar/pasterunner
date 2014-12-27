@@ -20,6 +20,7 @@ end
 
 # Helpers
 helpers do
+  
   def eval_in(snippet)
     result = Net::HTTP.post_form(
       ServiceURI,
@@ -45,6 +46,17 @@ helpers do
       raise CommunicationError, result
     end
   end
+
+  def get_gist_code(id)
+    uri = URI('https://api.github.com/gists/' + id)
+    result = Net::HTTP.get_response(uri)
+    if res.is_a?(Net::HTTPSuccess)
+      result.body
+    else
+      raise CommunicationError, result
+    end
+  end
+
 end
 
 
@@ -61,9 +73,9 @@ end
 # API
 post '/exec' do
   id = params[:url].split('/')[-1]
-  res = Faraday.get('https://api.github.com/gists/' + id)
+  res = get_gist_code(id)
   data = JSON.parse(res.body)
   code = data['files'].values.map { |h| h['content'] }
   p code[0]
-  p eval_in(code[0])
+  p eval_in code[0]
 end
