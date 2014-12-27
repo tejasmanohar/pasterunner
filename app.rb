@@ -44,7 +44,7 @@ helpers do
         "#{first_line[0, MaxLength]}#{'...' if needs_ellipsis} "\
         "(#{location})"
       else
-        raise FormatError, "couldn't find program output"
+        raise FormatError, 'could not find program output'
       end
     else
       raise CommunicationError, result
