@@ -4,7 +4,7 @@
 
 
 # Gems
-require 'http'
+require 'faraday'
 require 'json'
 require 'sinatra'
 
