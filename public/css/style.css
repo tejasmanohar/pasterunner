@@ -1,0 +1,12 @@
+input#url {
+  margin-top: 7%;
+  margin-right: 3px;
+  width: calc(100% - 100px);
+  float: left;
+}
+
+button#submit {
+  margin-top: 7%;
+  width: 97px;
+  float: left;
+}
