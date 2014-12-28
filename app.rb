@@ -78,4 +78,5 @@ post '/exec' do
   id = params[:url].split('/')[-1]
   code = get_gist_code(id)
   @output = eval_in code, params[:language]
+  erb :output
 end
