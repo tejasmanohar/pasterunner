@@ -48,8 +48,9 @@ helpers do
 
       body = Nokogiri(Net::HTTP.get(location))
 
-      output_title = res.body.at_xpath("*//h2[text()='Program Output']")
-      output = output_title.next_element.text
+      if output_title = body.at_xpath("*//h2[text()='Program Output']")
+        output = output_title.next_element.text
+      end
     else
       raise CommunicationError, result
     end
