@@ -5,6 +5,66 @@
   </h1>
   <form role="search" action="/search">
     <input name="url" type="text" class="form-control" id="url" placeholder="Gist/Pastebin URL">
+    <select name="language" class="form-control">
+      <option disabled selected>Select language</option>
+        <optgroup label="C">
+            <option value="c/gcc-4.4.3" >C / GCC 4.4.3</option>
+            <option value="c/gcc-4.9.1" >C / GCC 4.9.1</option>
+        </optgroup>
+        <optgroup label="C++">
+            <option value="c++/c++11-gcc-4.9.1" >C++ / C++11 (GCC 4.9.1)</option>
+            <option value="c++/gcc-4.4.3" >C++ / GCC 4.4.3</option>
+            <option value="c++/gcc-4.9.1" >C++ / GCC 4.9.1</option>
+        </optgroup>
+        <optgroup label="CoffeeScript">
+            <option value="coffeescript/node-0.10.29-coffee-1.7.1" >CoffeeScript / CoffeeScript 1.7.1 (Node 0.10.29)</option>
+        </optgroup>
+        <optgroup label="Fortran">
+            <option value="fortran/f95-4.4.3" >Fortran / F95 (GCC 4.4.3)</option>
+        </optgroup>
+        <optgroup label="Haskell">
+            <option value="haskell/hugs98-sep-2006" >Haskell / Hugs98 September 2006</option>
+        </optgroup>
+        <optgroup label="Io">
+            <option value="io/io-20131204" >Io / Io 20131204</option>
+        </optgroup>
+        <optgroup label="JavaScript">
+            <option value="javascript/node-0.10.29" >JavaScript / Node 0.10.29</option>
+        </optgroup>
+        <optgroup label="Lua">
+            <option value="lua/lua-5.1.5" >Lua / Lua 5.1.5</option>
+            <option value="lua/lua-5.2.3" >Lua / Lua 5.2.3</option>
+        </optgroup>
+        <optgroup label="OCaml">
+            <option value="ocaml/ocaml-4.01.0" >OCaml / OCaml 4.01.0</option>
+        </optgroup>
+        <optgroup label="PHP">
+            <option value="php/php-5.5.14" >PHP / PHP 5.5.14</option>
+        </optgroup>
+        <optgroup label="Pascal">
+            <option value="pascal/fpc-2.6.4" >Pascal / Free Pascal 2.6.4</option>
+        </optgroup>
+        <optgroup label="Perl">
+            <option value="perl/perl-5.20.0" >Perl / Perl 5.20.0</option>
+        </optgroup>
+        <optgroup label="Python">
+            <option value="python/cpython-2.7.8" >Python / CPython 2.7.8</option>
+            <option value="python/cpython-3.4.1" >Python / CPython 3.4.1</option>
+        </optgroup>
+        <optgroup label="Ruby">
+            <option value="ruby/mri-1.0" >Ruby / MRI 1.0</option>
+            <option value="ruby/mri-1.8.7" >Ruby / MRI 1.8.7</option>
+            <option value="ruby/mri-1.9.3" >Ruby / MRI 1.9.3</option>
+            <option value="ruby/mri-2.0.0" >Ruby / MRI 2.0.0</option>
+            <option value="ruby/mri-2.1" >Ruby / MRI 2.1</option>
+        </optgroup>
+        <optgroup label="Slash">
+            <option value="slash/slash-head" >Slash / Slash HEAD</option>
+        </optgroup>
+        <optgroup label="x86 Assembly">
+            <option value="assembly/nasm-2.07" >x86 Assembly / NASM 2.07</option>
+        </optgroup>
+    </select>
     <button type="submit" class="btn btn-default" id="submit">Submit</button>
   </form>
 </center>

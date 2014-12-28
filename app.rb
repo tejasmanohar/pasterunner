@@ -32,13 +32,13 @@ helpers do
     end
   end
 
-  def eval_in(snippet)
+  def eval_in(code, language)
     result = Net::HTTP.post_form(
       ServiceURI,
      "utf8" => "λ",
-     "code" => snippet,
+     "code" => code,
      "execute" => "on",
-     "lang" => "ruby/mri-2.1",
+     "lang" => language,
      "input" => ""
     )
     if result.is_a? Net::HTTPFound
@@ -73,5 +73,5 @@ end
 post '/exec' do
   id = params[:url].split('/')[-1]
   code = get_gist_code(id)
-  @output = eval_in code
+  @output = eval_in code, params[:language]
 end
