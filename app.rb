@@ -21,6 +21,17 @@ end
 # Helpers
 helpers do
   
+  def get_gist_code(id)
+    uri = URI('https://api.github.com/gists/' + id)
+    res = Net::HTTP.get_response(uri)
+    if res.is_a?(Net::HTTPSuccess)
+      data = JSON.parse(res.body)
+      code = data['files'].values.map { |h| h['content'] }
+    else
+      raise CommunicationError, res
+    end
+  end
+
   def eval_in(snippet)
     result = Net::HTTP.post_form(
       ServiceURI,
@@ -37,24 +48,10 @@ helpers do
 
       body = Nokogiri(Net::HTTP.get(location))
 
-      if output_title = body.at_xpath("*//h2[text()='Program Output']")
-        output_title.next_element.text
-      else
-        raise FormatError, 'could not find program output'
-      end
+      output_title = res.body.at_xpath("*//h2[text()='Program Output']")
+      output = output_title.next_element.text
     else
       raise CommunicationError, result
-    end
-  end
-
-  def get_gist_code(id)
-    uri = URI('https://api.github.com/gists/' + id)
-    res = Net::HTTP.get_response(uri)
-    if res.is_a?(Net::HTTPSuccess)
-      data = JSON.parse(res.body)
-      code = data['files'].values.map { |h| h['content'] }
-    else
-      raise CommunicationError, res
     end
   end
 
