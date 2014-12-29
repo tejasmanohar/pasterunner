@@ -35,11 +35,10 @@ helpers do
     })
     location = result['location']
 
-    body = Nokogiri(HTTP.get(location).body.to_s)
+    data = JSON.parse HTTP.get(location + '.json')
 
-    if output_title = body.at_xpath("*//h2[text()='Program Output']")
-      output = output_title.next_element.text
-    end
+    data['output']
+
   end
 
 end
