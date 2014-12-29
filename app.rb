@@ -21,18 +21,20 @@ end
 helpers do
   
   def get_gist_code(id)
-    result = HTTP.get('https://api.github.com/gists/' + id)
+    result = HTTP.with_headers(:'User-Agent' => 'tejasmanohar/pasterunner')
+                 .get('https://api.github.com/gists/' + id)
     data = JSON.parse result.body.to_s
     code = data['files'].values.map { |h| h['content'] }
   end
 
   def eval_in(code, language)
-    result = HTTP.post('https://eval.in/', :form => {
-      :utf8 => 'λ',
-      :code => code,
-      :execute => 'on',
-      :lang => language
-    })
+    result = HTTP.with_headers(:'User-Agent' => 'tejasmanohar/pasterunner')
+                 .post('https://eval.in/', :form => {
+                   :utf8 => 'λ',
+                   :code => code,
+                   :execute => 'on',
+                   :lang => language
+                 })
     location = result['location']
 
     data = JSON.parse HTTP.get(location + '.json')
