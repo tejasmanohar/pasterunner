@@ -5,8 +5,7 @@
 
 # Gems
 require 'nokogiri'
-require 'net/http'
-require 'faraday'
+require 'http'
 require 'json'
 require 'sinatra'
 
@@ -14,7 +13,7 @@ require 'sinatra'
 # Sinatra Settings
 configure do
   enable :protection
-  ServiceURI = URI('https://eval.in/')
+  set :server, 'webrick'
 end
 
 
@@ -22,37 +21,24 @@ end
 helpers do
   
   def get_gist_code(id)
-    uri = URI('https://api.github.com/gists/' + id)
-    res = Net::HTTP.get_response(uri)
-    if res.is_a?(Net::HTTPSuccess)
-      data = JSON.parse(res.body)
-      code = data['files'].values.map { |h| h['content'] }
-    else
-      raise CommunicationError, res
-    end
+    result = HTTP.get('https://api.github.com/gists/' + id)
+    data = JSON.parse result.body.to_s
+    code = data['files'].values.map { |h| h['content'] }
   end
 
   def eval_in(code, language)
-    result = Net::HTTP.post_form(
-      ServiceURI,
-     "utf8" => "λ",
-     "code" => code,
-     "execute" => "on",
-     "lang" => language,
-     "input" => ""
-    )
-    if result.is_a? Net::HTTPFound
-      location = URI(result['location'])
-      location.scheme = 'https'
-      location.port = 443
+    result = HTTP.post('https://eval.in/', :form => {
+      :utf8 => 'λ',
+      :code => code,
+      :execute => 'on',
+      :lang => language
+    })
+    location = result['location']
 
-      body = Nokogiri(Net::HTTP.get(location))
+    body = Nokogiri(HTTP.get(location).body.to_s)
 
-      if output_title = body.at_xpath("*//h2[text()='Program Output']")
-        output = output_title.next_element.text
-      end
-    else
-      raise CommunicationError, result
+    if output_title = body.at_xpath("*//h2[text()='Program Output']")
+      output = output_title.next_element.text
     end
   end
 
