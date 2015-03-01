@@ -1,4 +1,4 @@
 pasterunner
 ===========
 
-execute code snippets on the fly
+execute gists on the fly
